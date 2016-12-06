@@ -1,6 +1,5 @@
 (function() {
 
-
     var options = {
         center: [38.2, -94],
         zoom: 5,
@@ -212,6 +211,10 @@
     };
 
     function buildUI() {
+
+        // listen for user clicks on radio buttons and call clickRadioButton() function
+         $('#ui-controls input[type="radio"]').on('click', clickRadioButton);
+
         // create a Leaflet control object and store a reference to it in a variable
         var sliderControl = L.control({
             position: 'bottomleft'
