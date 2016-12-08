@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
     var options = {
         center: [38.2, -94],
@@ -23,13 +23,13 @@
     var breakArray = [0, 0.2, 0.4, 0.6, 0.8, 1];
     //var breakArray = [0, 20, 40, 60, 80, 100];
 
-    $.getJSON("data/uscounties.json", function(counties) {
+    $.getJSON("data/uscounties.json", function (counties) {
 
         Papa.parse('data/Marital-Status-ACS.csv', {
 
             download: true,
             header: true,
-            complete: function(data) {
+            complete: function (data) {
                 processData(counties, data);
             }
         }); // end of Papa.parse()
@@ -50,9 +50,9 @@
         } // outer for loop is complete
         drawMap(states);
 
-        $(document).ready(function() {
+        $(document).ready(function () {
 
-            $("input[type='range']").change(function() {
+            $("input[type='range']").change(function () {
                 slider = $(this);
                 value = (slider.val() - 1);
 
@@ -61,7 +61,7 @@
 
             });
 
-            $('p.rangeLabel').bind('click', function() {
+            $('p.rangeLabel').bind('click', function () {
                 label = $(this);
                 value = label.index();
                 $("input[type='range']").attr('value', value)
@@ -81,7 +81,7 @@
     function drawMap(data) {
 
         dataLayer = L.geoJson(data, {
-            style: function(feature) { // style each feature of GeoJson layer
+            style: function (feature) { // style each feature of GeoJson layer
                 return {
                     color: 'black', // set stroke color
                     weight: 1, // set stroke weight
@@ -98,7 +98,7 @@
         drawLegend(breaks);
         buildUI();
 
-        dataLayer.eachLayer(function(layer) {
+        dataLayer.eachLayer(function (layer) {
 
 
             // create shorthand variable to access layer properties
@@ -109,7 +109,7 @@
                 stroke: 'yellow'
             });
 
-            layer.on('mouseover', function(e) {
+            layer.on('mouseover', function (e) {
                 e.target.setStyle({
                     //changes the outline to yellow and weight to 3
                     color: 'yellow',
@@ -118,7 +118,7 @@
                 e.target.bringToFront();
                 updateInfo(this);
             });
-            layer.on('mouseout', function(e) {
+            layer.on('mouseout', function (e) {
                 e.target.setStyle({
                     //changes the outline to yellow and weight to 1
                     color: 'black',
@@ -128,10 +128,10 @@
                 updateInfo(this);
             });
         });
-        dataLayer.on('mouseover', function(e) {
+        dataLayer.on('mouseover', function (e) {
             $(".info").show();
         });
-        dataLayer.on('mouseout', function() {
+        dataLayer.on('mouseout', function () {
             $(".info").hide();
         });
     }
@@ -145,23 +145,37 @@
 
         var headers = ["1519T", "1519NM", "1519W", "1519D", "1519S", "1519NVM", "2034T", "2034NM", "2034W", "2034D", "2034S", "2034NVM", "3544T", "3544NM", "3544W", "3544D", "3544S", "3544NVM", "4554T", "4554NM", "4554W", "4554D", "4554S", "4554NVM", "5564T", "5564NM", "5564W", "5564D", "5564S", "5564NVM", "65OVT", "65OVNM", "65OVW", "65OVD", "65OVS", "65OVNVM"];
 
+        var min, max;
+        min = max =0;
+
         // loop through each layer
-        dataLayer.eachLayer(function(layer) {
+        dataLayer.eachLayer(function (layer) {
             for (i = 0; i < headers.length - 1; i++) {
+//                var value = layer.feature.properties[headers[i]];
+//                if (value != null)
+//                    values.push(Number(value));
+
                 var value = layer.feature.properties[headers[i]];
-                if (value != null)
-                    values.push(Number(value));
+                if(value != null){
+                min = Math.min(min, value);
+                max = Math.max(max, value);
+                }
+            
+                //if (value != null)
+                //    values.push(Number(value));
             }
         });
 
-        breaks = ss.quantile(values, breakArray);
+        //breaks = ss.quantile(values, breakArray);
         //breaks = breakArray;
+          var breaks = (max - min) / 5;
+
         return breaks;
 
     }
 
     function updateMap(breaks) {
-        dataLayer.eachLayer(function(layer) {
+        dataLayer.eachLayer(function (layer) {
             layer.setStyle({
                 fillColor: getColor(Number(layer.feature.properties[attribute]), breaks)
             })
@@ -187,7 +201,7 @@
         var info = L.control({
             position: 'bottomright' // draws the info box in the bottom right corner of the map
         });
-        info.onAdd = function(map) {
+        info.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info'); //adds the info surrounded by a div called info (used .info in the css to style it)
             return div;
         }
@@ -213,7 +227,7 @@
     function buildUI() {
 
         // listen for user clicks on radio buttons and call clickRadioButton() function
-         $('#ui-controls input[type="radio"]').on('click', clickRadioButton);
+        $('#ui-controls input[type="radio"]').on('click', clickRadioButton);
 
         // create a Leaflet control object and store a reference to it in a variable
         var sliderControl = L.control({
@@ -221,13 +235,13 @@
         });
 
         // when we add this control object to the map
-        sliderControl.onAdd = function(map) {
+        sliderControl.onAdd = function (map) {
 
             // select an existing DOM element with an id of "ui-controls"
             var slider = L.DomUtil.get("ui-controls");
 
             // when the user clicks on the slider element
-            L.DomEvent.addListener(slider, 'mousedown', function(e) {
+            L.DomEvent.addListener(slider, 'mousedown', function (e) {
 
                 // prevent the click event from bubbling up to the map
                 L.DomEvent.stopPropagation(e);
@@ -240,7 +254,7 @@
 
         // add the control object containing our slider element to the map
         sliderControl.addTo(map);
-        $(".year-slider").on("input change", function() {
+        $(".year-slider").on("input change", function () {
             if ($(this).val() == 1)
                 attribute = "1519";
             else if ($(this).val() == 2)
@@ -289,7 +303,7 @@
         });
 
         // when the legend is added to the map
-        legendControl.onAdd = function(map) {
+        legendControl.onAdd = function (map) {
 
             var div = L.DomUtil.create('div', 'legend');
             return div;
