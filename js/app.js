@@ -20,8 +20,8 @@
     var dataLayer;
     var attribute = "1519NM";
     var breaks;
-    var breakArray = [0, 0.2, 0.4, 0.6, 0.8, 1];
-    //var breakArray = [0, 20, 40, 60, 80, 100];
+    //var breakArray = [0, 0.2, 0.4, 0.6, 0.8, 1];
+    var breakArray = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
     $.getJSON("data/uscounties.json", function (counties) {
 
@@ -83,7 +83,7 @@
         dataLayer = L.geoJson(data, {
             style: function (feature) { // style each feature of GeoJson layer
                 return {
-                    color: 'black', // set stroke color
+                    color: '#363636', // set stroke color
                     weight: 1, // set stroke weight
                     fillOpacity: 1, // override defautl fill opacity
                     fillColor: '#1f78b4' // set fill color
@@ -121,7 +121,7 @@
             layer.on('mouseout', function (e) {
                 e.target.setStyle({
                     //changes the outline to yellow and weight to 1
-                    color: 'black',
+                    color: '#363636',
                     weight: 1,
                 });
 
@@ -141,34 +141,34 @@
     function getClassBreaks() {
 
         // create empty array to hold range of data values
-        var values = [];
-
-        var headers = ["1519T", "1519NM", "1519W", "1519D", "1519S", "1519NVM", "2034T", "2034NM", "2034W", "2034D", "2034S", "2034NVM", "3544T", "3544NM", "3544W", "3544D", "3544S", "3544NVM", "4554T", "4554NM", "4554W", "4554D", "4554S", "4554NVM", "5564T", "5564NM", "5564W", "5564D", "5564S", "5564NVM", "65OVT", "65OVNM", "65OVW", "65OVD", "65OVS", "65OVNVM"];
-
-        var min, max;
-        min = max =0;
-
-        // loop through each layer
-        dataLayer.eachLayer(function (layer) {
-            for (i = 0; i < headers.length - 1; i++) {
+//        var values = [];
+//
+//        var headers = ["1519T", "1519NM", "1519W", "1519D", "1519S", "1519NVM", "2034T", "2034NM", "2034W", "2034D", "2034S", "2034NVM", "3544T", "3544NM", "3544W", "3544D", "3544S", "3544NVM", "4554T", "4554NM", "4554W", "4554D", "4554S", "4554NVM", "5564T", "5564NM", "5564W", "5564D", "5564S", "5564NVM", "65OVT", "65OVNM", "65OVW", "65OVD", "65OVS", "65OVNVM"];
+//
+//        var min, max;
+//        min = max =0;
+//
+//        // loop through each layer
+//        dataLayer.eachLayer(function (layer) {
+//            for (i = 0; i < headers.length - 1; i++) {
 //                var value = layer.feature.properties[headers[i]];
 //                if (value != null)
 //                    values.push(Number(value));
-
-                var value = layer.feature.properties[headers[i]];
-                if(value != null){
-                min = Math.min(min, value);
-                max = Math.max(max, value);
-                }
-            
-                //if (value != null)
-                //    values.push(Number(value));
-            }
-        });
+//
+////                var value = layer.feature.properties[headers[i]];
+////                if(value != null){
+////                min = Math.min(min, value);
+////                max = Math.max(max, value);
+////                }
+//            
+//                //if (value != null)
+//                //    values.push(Number(value));
+//            }
+//        });
 
         //breaks = ss.quantile(values, breakArray);
-        //breaks = breakArray;
-          var breaks = (max - min) / 5;
+        breaks = breakArray;
+        //var breaks = (max - min) / 5;
 
         return breaks;
 
@@ -185,15 +185,25 @@
     function getColor(d, breaks) {
 
         if (d <= breaks[1]) {
-            return '#ffffb2';
+            return '#ccffff';
         } else if (d <= breaks[2]) {
-            return '#fecc5c';
+            return '#99ffff';
         } else if (d <= breaks[3]) {
-            return '#fd8d3c';
+            return '#66ffff';
         } else if (d <= breaks[4]) {
-            return '#f03b20'
+            return '#33ffff'
         } else if (d <= breaks[5]) {
-            return '#bd0026'
+            return '#00ffff'
+        } else if (d <= breaks[6]) {
+            return '#00cccc';
+        } else if (d <= breaks[7]) {
+            return '#009999';
+        } else if (d <= breaks[8]) {
+            return '#006666'
+        } else if (d <= breaks[9]) {
+            return '#003333'
+        } else if (d <= breaks[10]) {
+            return '#001a1a'
         }
     }
 
