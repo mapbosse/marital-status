@@ -22,7 +22,7 @@ body {
     height: 170px;
 }
 
-.info h4 {
+.info h3 {
     margin: 0;
     margin-bottom: 10px;
 }
@@ -40,7 +40,7 @@ body {
     height: auto;
     transform: rotateZ(90deg);
     float: left;
-    margin-left: 50px;
+    margin-top: 90px;
     /*            padding-right: 80px;*/
 }
 
@@ -64,9 +64,10 @@ input[type="range"] {
 }
 
 p.rangeLabel {
-    font-size: 15px;
+    font-size: 16px;
     line-height 0px;
     color: grey;
+    margin: 0px;
 }
 
 p.rangeLabel:hover {
@@ -75,6 +76,10 @@ p.rangeLabel:hover {
 
 p.rangeLabel.selected {
     color: white;
+}
+
+#labels{
+    margin-top: 30px;
 }
 
 h1 {

@@ -2,7 +2,7 @@
 
     var options = {
         center: [38.2, -94],
-        zoom: 5,
+        zoom: 4,
         minZoom: 3,
         maxZoom: 9,
         dragging: true,
@@ -121,7 +121,7 @@
             layer.on('mouseout', function (e) {
                 e.target.setStyle({
                     //changes the outline to yellow and weight to 1
-                    color: '#363636',
+                    color: getStrokeColor(Number(layer.feature.properties[attribute]), breaks),
                     weight: 1,
                 });
 
@@ -141,30 +141,30 @@
     function getClassBreaks() {
 
         // create empty array to hold range of data values
-//        var values = [];
-//
-//        var headers = ["1519T", "1519NM", "1519W", "1519D", "1519S", "1519NVM", "2034T", "2034NM", "2034W", "2034D", "2034S", "2034NVM", "3544T", "3544NM", "3544W", "3544D", "3544S", "3544NVM", "4554T", "4554NM", "4554W", "4554D", "4554S", "4554NVM", "5564T", "5564NM", "5564W", "5564D", "5564S", "5564NVM", "65OVT", "65OVNM", "65OVW", "65OVD", "65OVS", "65OVNVM"];
-//
-//        var min, max;
-//        min = max =0;
-//
-//        // loop through each layer
-//        dataLayer.eachLayer(function (layer) {
-//            for (i = 0; i < headers.length - 1; i++) {
-//                var value = layer.feature.properties[headers[i]];
-//                if (value != null)
-//                    values.push(Number(value));
-//
-////                var value = layer.feature.properties[headers[i]];
-////                if(value != null){
-////                min = Math.min(min, value);
-////                max = Math.max(max, value);
-////                }
-//            
-//                //if (value != null)
-//                //    values.push(Number(value));
-//            }
-//        });
+        //        var values = [];
+        //
+        //        var headers = ["1519T", "1519NM", "1519W", "1519D", "1519S", "1519NVM", "2034T", "2034NM", "2034W", "2034D", "2034S", "2034NVM", "3544T", "3544NM", "3544W", "3544D", "3544S", "3544NVM", "4554T", "4554NM", "4554W", "4554D", "4554S", "4554NVM", "5564T", "5564NM", "5564W", "5564D", "5564S", "5564NVM", "65OVT", "65OVNM", "65OVW", "65OVD", "65OVS", "65OVNVM"];
+        //
+        //        var min, max;
+        //        min = max =0;
+        //
+        //        // loop through each layer
+        //        dataLayer.eachLayer(function (layer) {
+        //            for (i = 0; i < headers.length - 1; i++) {
+        //                var value = layer.feature.properties[headers[i]];
+        //                if (value != null)
+        //                    values.push(Number(value));
+        //
+        ////                var value = layer.feature.properties[headers[i]];
+        ////                if(value != null){
+        ////                min = Math.min(min, value);
+        ////                max = Math.max(max, value);
+        ////                }
+        //            
+        //                //if (value != null)
+        //                //    values.push(Number(value));
+        //            }
+        //        });
 
         //breaks = ss.quantile(values, breakArray);
         breaks = breakArray;
@@ -177,7 +177,8 @@
     function updateMap(breaks) {
         dataLayer.eachLayer(function (layer) {
             layer.setStyle({
-                fillColor: getColor(Number(layer.feature.properties[attribute]), breaks)
+                fillColor: getColor(Number(layer.feature.properties[attribute]), breaks),
+                color: getStrokeColor(Number(layer.feature.properties[attribute]), breaks)
             })
         });
     }
@@ -207,6 +208,32 @@
         }
     }
 
+    // function to get the color value
+    function getStrokeColor(d, breaks) {
+
+        if (d <= breaks[1]) {
+            return '#001a1a';
+        } else if (d <= breaks[2]) {
+            return '#003333';
+        } else if (d <= breaks[3]) {
+            return '#006666';
+        } else if (d <= breaks[4]) {
+            return '#009999'
+        } else if (d <= breaks[5]) {
+            return '#00cccc'
+        } else if (d <= breaks[6]) {
+            return '#00ffff';
+        } else if (d <= breaks[7]) {
+            return '#33ffff';
+        } else if (d <= breaks[8]) {
+            return '#66ffff'
+        } else if (d <= breaks[9]) {
+            return '#99ffff'
+        } else if (d <= breaks[10]) {
+            return '#ccffff'
+        }
+    }
+
     function drawInfo() {
         var info = L.control({
             position: 'bottomright' // draws the info box in the bottom right corner of the map
@@ -228,7 +255,7 @@
         else
             displayYears += " - " + attributeYear.substr(2, 2);
 
-        var html = "<h4>Percentage of " + displayYears + " year-olds per Marital Status in " + props['Geography'] + "</h4>Now Married: " + props[attributeYear + "NM"] + "%<br>" + "Never Married: " + props[attributeYear + "NVM"] + "%<br>" + "Separated: " + props[attributeYear + "S"] + "%<br>" + "Divorced: " + props[attributeYear + "D"] + "%<br>" + "Widowed: " + props[attributeYear + "W"] + "%";
+        var html = "<h3>Percentage of " + displayYears + " year-olds per Marital Status in " + props['Geography'] + "</h3>Now Married: " + props[attributeYear + "NM"] + "%<br>" + "Never Married: " + props[attributeYear + "NVM"] + "%<br>" + "Separated: " + props[attributeYear + "S"] + "%<br>" + "Divorced: " + props[attributeYear + "D"] + "%<br>" + "Widowed: " + props[attributeYear + "W"] + "%";
 
 
         $(".info").html(html); //changes the html in the info box
