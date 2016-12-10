@@ -26,15 +26,16 @@ body {
     margin-bottom: 10px;
 }
 #ui-controls {
-    height: 500px;
+    height: 100%;
     padding: 15px 8px 15px 8px;
-    background: rgba(75, 75, 75, 0.8);
+    background: rgba(255, 102, 0, 1);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     color: whitesmoke;
     font-family: "Open Sans";
     font-size: 16px;
     width: 180px;
+    margin: 0px;
 }
 .year-slider {
     height: auto;
@@ -70,7 +71,6 @@ p.rangeLabel.selected {
 }
 #labels {
     margin-top: 30px;
-    float: left;
 }
 h1 {
 /*

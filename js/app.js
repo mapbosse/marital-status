@@ -122,7 +122,7 @@
                 e.target.setStyle({
                     //changes the outline to yellow and weight to 1
                     color: getStrokeColor(Number(layer.feature.properties[attribute]), breaks),
-                    weight: 1,
+                    weight: .5,
                 });
 
                 updateInfo(this);
@@ -237,12 +237,14 @@
 
     function drawInfo() {
         var info = L.control({
-            position: 'bottomright' // draws the info box in the bottom right corner of the map
+            position: 'bottomleft' // draws the info box in the bottom right corner of the map
         });
-        info.onAdd = function (map) {
+        var div = info.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info'); //adds the info surrounded by a div called info (used .info in the css to style it)
             return div;
         }
+//        var uicontrols = document.getElementById("ui-controls");
+//        uicontrols.appendChild(div);
         info.addTo(map); //adds infobox to map
         $(".info").hide();
     }
