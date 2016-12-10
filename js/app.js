@@ -84,7 +84,7 @@
             style: function (feature) { // style each feature of GeoJson layer
                 return {
                     color: '#363636', // set stroke color
-                    weight: 1, // set stroke weight
+                    weight: .5, // set stroke weight
                     fillOpacity: 1, // override defautl fill opacity
                     fillColor: '#1f78b4' // set fill color
                 };
@@ -205,7 +205,8 @@
             return '#003333'
         } else if (d <= breaks[10]) {
             return '#001a1a'
-        }
+        } else
+            return "#8a8a8a";
     }
 
     // function to get the color value
@@ -254,8 +255,28 @@
             displayYears += "+ ";
         else
             displayYears += " - " + attributeYear.substr(2, 2);
+        var nowmarried = props[attributeYear + "NM"];
+        var nevermarried = props[attributeYear + "NVM"];
+        var divorced = props[attributeYear + "D"];
+        var widowed = props[attributeYear + "W"];
+        if (nowmarried == "#VALUE!")
+            nowmarried = "No Data";
+        else
+            nowmarried += "%";
+        if (nevermarried == "#VALUE!")
+            nevermarried = "No Data";
+        else
+            nevermarried += "%";
+        if (divorced == "#VALUE!")
+            divorced = "No Data";
+        else
+            divorced += "%";
+        if (widowed == "#VALUE!")
+            widowed = "No Data";
+        else
+            widowed += "%";
 
-        var html = "<h3>Percentage of " + displayYears + " year-olds per Marital Status in " + props['Geography'] + "</h3>Now Married: " + props[attributeYear + "NM"] + "%<br>" + "Never Married: " + props[attributeYear + "NVM"] + "%<br>" + "Separated: " + props[attributeYear + "S"] + "%<br>" + "Divorced: " + props[attributeYear + "D"] + "%<br>" + "Widowed: " + props[attributeYear + "W"] + "%";
+        var html = "<h3>Percentage of " + displayYears + " year-olds per Marital Status in " + props['Geography'] + "</h3>Now Married: " + nowmarried + "<br>" + "Never Married: " + nevermarried + "<br>" + "Divorced: " + divorced + "<br>" + "Widowed: " + widowed;
 
 
         $(".info").html(html); //changes the html in the info box
@@ -268,7 +289,7 @@
 
         // create a Leaflet control object and store a reference to it in a variable
         var sliderControl = L.control({
-            position: 'bottomleft'
+            position: 'topleft'
         });
 
         // when we add this control object to the map
@@ -362,7 +383,7 @@
 
         for (var i = 0; i < breaks.length - 1; i++) {
             var color = getColor(breaks[i + 1], breaks);
-            $('.legend ul').append('<li><span style="background:' + color + '"></span>' + breaks[i] + '&mdash; ' + breaks[i + 1] + '</li>');
+            $('.legend ul').append('<li><span style="background:' + color + '"></span>' + breaks[i] + ' &mdash; ' + breaks[i + 1] + '%</li>');
         }
     };
 })();

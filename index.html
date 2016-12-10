@@ -10,22 +10,26 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link href="css/styles.css" rel="stylesheet" type='text/css' />
-
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Francois+One" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+    <link rel="shortcut icon" type="image/png" href="/data/favicon.png" />
 </head>
 
 <body>
 
     <form id="formname">
-        <h1>Marital Status by County</h1>
+        <!--        <h1>Marital Status by County</h1>-->
         <div id='map'></div>
         <div id="ui-controls">
+            <h1>Marital Status by County</h1>
+
             <input id="nm" type="radio" value="NM" name="radiogroup" checked=true>
             <label for="nm">Now Married</label>
             <br>
             <input id="nvm" type="radio" value="NVM" name="radiogroup">
             <label for="nvm">Never Married</label>
             <br>
-<!--
+            <!--
             <input id="s" type="radio" value="S" name="radiogroup">
             <label for="s">Separated</label>
             <br>
@@ -48,6 +52,9 @@
                 </div>
             </div>
         </div>
+        <pattern id="texture_diagonal" x="0" y="0" width="25%" height="25%" patternUnits="objectBoundingBox">
+            <path d="M 0 0 l 32 32" style="stroke: black; fill: none;" />
+        </pattern>
     </form>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
