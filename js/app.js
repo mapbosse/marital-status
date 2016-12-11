@@ -121,7 +121,7 @@
             layer.on('mouseout', function (e) {
                 e.target.setStyle({
                     //changes the outline to yellow and weight to 1
-                    color: getStrokeColor(Number(layer.feature.properties[attribute]), breaks),
+                    color: "#363636",
                     weight: .5,
                 });
 
@@ -177,8 +177,7 @@
     function updateMap(breaks) {
         dataLayer.eachLayer(function (layer) {
             layer.setStyle({
-                fillColor: getColor(Number(layer.feature.properties[attribute]), breaks),
-                color: getStrokeColor(Number(layer.feature.properties[attribute]), breaks)
+                fillColor: getColor(Number(layer.feature.properties[attribute]), breaks)
             })
         });
     }
@@ -210,30 +209,30 @@
     }
 
     // function to get the color value
-    function getStrokeColor(d, breaks) {
-
-        if (d <= breaks[1]) {
-            return '#001a1a';
-        } else if (d <= breaks[2]) {
-            return '#003333';
-        } else if (d <= breaks[3]) {
-            return '#006666';
-        } else if (d <= breaks[4]) {
-            return '#009999'
-        } else if (d <= breaks[5]) {
-            return '#00cccc'
-        } else if (d <= breaks[6]) {
-            return '#00ffff';
-        } else if (d <= breaks[7]) {
-            return '#33ffff';
-        } else if (d <= breaks[8]) {
-            return '#66ffff'
-        } else if (d <= breaks[9]) {
-            return '#99ffff'
-        } else if (d <= breaks[10]) {
-            return '#ccffff'
-        }
-    }
+//    function getStrokeColor(d, breaks) {
+//
+//        if (d <= breaks[1]) {
+//            return '#001a1a';
+//        } else if (d <= breaks[2]) {
+//            return '#003333';
+//        } else if (d <= breaks[3]) {
+//            return '#006666';
+//        } else if (d <= breaks[4]) {
+//            return '#009999'
+//        } else if (d <= breaks[5]) {
+//            return '#00cccc'
+//        } else if (d <= breaks[6]) {
+//            return '#00ffff';
+//        } else if (d <= breaks[7]) {
+//            return '#33ffff';
+//        } else if (d <= breaks[8]) {
+//            return '#66ffff'
+//        } else if (d <= breaks[9]) {
+//            return '#99ffff'
+//        } else if (d <= breaks[10]) {
+//            return '#ccffff'
+//        }
+//    }
 
     function drawInfo() {
         var info = L.control({
