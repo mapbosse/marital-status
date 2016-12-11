@@ -18,7 +18,7 @@
     map.addLayer(tiles);
 
     var dataLayer;
-    var attribute = "1519NM";
+    var attribute = "2034NM";
     var breaks;
     //var breakArray = [0, 0.2, 0.4, 0.6, 0.8, 1];
     var breakArray = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];

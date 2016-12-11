@@ -98,6 +98,7 @@ h1 {
     line-height: 1em;
     color: whitesmoke;
     margin: 0;
+    text-align: center;
 }
 .legend {
     padding: 6px 8px;
