@@ -12,12 +12,10 @@ body {
 .info {
     padding: 6px 8px;
     font-size: 1em;
-/*    background: rgba(75, 75, 75, 0.8);*/
+    background: rgba(75, 75, 75, 0.8);
     color: whitesmoke;
-/*
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
-*/
     width: 170px;
     text-align: left;
     height: 170px;
@@ -29,7 +27,8 @@ body {
     margin-bottom: 10px;
 }
 #ui-controls {
-    height: 100vh;
+/*    height: 100vh;*/
+    height:100%;
     padding: 15px 8px 15px 8px;
     background: rgba(0, 0, 0, 1);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -66,6 +65,11 @@ p.rangeLabel {
     color: grey;
     margin: 0px;
 }
+p.rangetitle{
+    font-size: 16px;
+    line-height 0px;
+    margin: 0px;
+}
 p.rangeLabel:hover {
     cursor: pointer;
 }
@@ -73,7 +77,7 @@ p.rangeLabel.selected {
     color: #00ffff;
 }
 #labels {
-    margin-top: 30px;
+    margin-top: 2px;
     text-align: left;
 }
 h1 {

@@ -185,25 +185,25 @@
     function getColor(d, breaks) {
 
         if (d <= breaks[1]) {
-            return '#ccffff';
+            return '#9e0142';
         } else if (d <= breaks[2]) {
-            return '#99ffff';
+            return '#d53e4f';
         } else if (d <= breaks[3]) {
-            return '#66ffff';
+            return '#f46d43';
         } else if (d <= breaks[4]) {
-            return '#33ffff'
+            return '#fdae61'
         } else if (d <= breaks[5]) {
-            return '#00ffff'
+            return '#fee08b'
         } else if (d <= breaks[6]) {
-            return '#00cccc';
+            return '#e6f598';
         } else if (d <= breaks[7]) {
-            return '#009999';
+            return '#abdda4';
         } else if (d <= breaks[8]) {
-            return '#006666'
+            return '#66c2a5'
         } else if (d <= breaks[9]) {
-            return '#003333'
+            return '#3288bd'
         } else if (d <= breaks[10]) {
-            return '#001a1a'
+            return '#5e4fa2'
         } else
             return "#8a8a8a";
     }
@@ -236,7 +236,7 @@
 
     function drawInfo() {
         var info = L.control({
-            position: 'bottomleft' // draws the info box in the bottom right corner of the map
+            position: 'bottomright' // draws the info box in the bottom right corner of the map
         });
         var div = info.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info'); //adds the info surrounded by a div called info (used .info in the css to style it)
