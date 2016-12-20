@@ -215,7 +215,7 @@
             var uicontrols = L.DomUtil.get("ui-controls");
 
             // when the user clicks on the slider element
-            L.DomEvent.addListener(uicontrols, 'mousemove', function (e) {
+            L.DomEvent.addListener(uicontrols, 'mousedown', function (e) {
 
                 // prevent the click event from bubbling up to the map
                 L.DomEvent.stopPropagation(e);
