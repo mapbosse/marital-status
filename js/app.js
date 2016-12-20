@@ -20,7 +20,7 @@
     var dataLayer;
     var attribute = "2034NM";
     var breaks;
-    var breakArray = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+    var breakArray = [0, 20, 40, 60, 80, 100];
 
     $.getJSON("data/uscounties.json", function (counties) {
 
@@ -177,54 +177,18 @@
     function getColor(d, breaks) {
 
         if (d <= breaks[1]) {
-            return '#9e0142';
+            return '#ffffb2';
         } else if (d <= breaks[2]) {
-            return '#d53e4f';
+            return '#fecc5c';
         } else if (d <= breaks[3]) {
-            return '#f46d43';
+            return '#fd8d3c';
         } else if (d <= breaks[4]) {
-            return '#fdae61'
+            return '#f03b20'
         } else if (d <= breaks[5]) {
-            return '#fee08b'
-        } else if (d <= breaks[6]) {
-            return '#e6f598';
-        } else if (d <= breaks[7]) {
-            return '#abdda4';
-        } else if (d <= breaks[8]) {
-            return '#66c2a5'
-        } else if (d <= breaks[9]) {
-            return '#3288bd'
-        } else if (d <= breaks[10]) {
-            return '#5e4fa2'
-        } else
-            return "#8a8a8a";
+            return '#bd0026'
+        }
     }
 
-    // function to get the color value
-//    function getStrokeColor(d, breaks) {
-//
-//        if (d <= breaks[1]) {
-//            return '#001a1a';
-//        } else if (d <= breaks[2]) {
-//            return '#003333';
-//        } else if (d <= breaks[3]) {
-//            return '#006666';
-//        } else if (d <= breaks[4]) {
-//            return '#009999'
-//        } else if (d <= breaks[5]) {
-//            return '#00cccc'
-//        } else if (d <= breaks[6]) {
-//            return '#00ffff';
-//        } else if (d <= breaks[7]) {
-//            return '#33ffff';
-//        } else if (d <= breaks[8]) {
-//            return '#66ffff'
-//        } else if (d <= breaks[9]) {
-//            return '#99ffff'
-//        } else if (d <= breaks[10]) {
-//            return '#ccffff'
-//        }
-//    }
 
     function drawInfo() {
         var info = L.control({
