@@ -20,7 +20,6 @@
     var dataLayer;
     var attribute = "2034NM";
     var breaks;
-    //var breakArray = [0, 0.2, 0.4, 0.6, 0.8, 1];
     var breakArray = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
     $.getJSON("data/uscounties.json", function (counties) {
@@ -70,13 +69,6 @@
 
         });
     }
-
-    //        function processData(data) {
-    //            for (var i in data.features) {
-    //                console.log(data.features[i].properties);
-    //            }
-    //            drawMap(data);
-    //        }
 
     function drawMap(data) {
 
@@ -160,7 +152,7 @@
         ////                min = Math.min(min, value);
         ////                max = Math.max(max, value);
         ////                }
-        //            
+        //
         //                //if (value != null)
         //                //    values.push(Number(value));
         //            }
