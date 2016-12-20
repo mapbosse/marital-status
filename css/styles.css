@@ -39,7 +39,7 @@ body {
     width: 180px;
     margin: 0px;
 }
-.year-slider {
+#year-slider {
     height: auto;
     transform: rotateZ(90deg);
     float: left;

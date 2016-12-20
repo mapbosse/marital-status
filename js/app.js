@@ -196,7 +196,7 @@
             var uicontrols = L.DomUtil.get("ui-controls");
 
             // when the user clicks on the slider element
-            L.DomEvent.addListener(uicontrols, 'mousedown', function (e) {
+            L.DomEvent.addListener(L.DomUtil.get("year-slider"), 'mousedown', function (e) {
 
                 // prevent the click event from bubbling up to the map
                 L.DomEvent.stopPropagation(e);
@@ -210,7 +210,7 @@
         // add the control object containing our slider element to the map
         sliderControl.addTo(map);
 
-        $(".year-slider").on("input change", function () {
+        $("#year-slider").on("input change", function () {
 
             var slider = $(this),
                 value = (slider.val() - 1);
@@ -246,7 +246,7 @@
             var value = $(this).index() - 1;
 
             // update the slider value
-            $('.year-slider').val(value + 1);
+            $('#year-slider').val(value + 1);
 
             // remove/add current selected classes
             $('p.rangeLabel').removeClass('selected');
