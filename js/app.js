@@ -126,25 +126,25 @@
         });
     }
 
-    function updateMap(breaks) {
+    function updateMap(breakArray) {
         dataLayer.eachLayer(function (layer) {
             layer.setStyle({
-                fillColor: getColor(Number(layer.feature.properties[attribute]), breaks)
+                fillColor: getColor(Number(layer.feature.properties[attribute]), breakArray)
             })
         });
     }
     // function to get the color value
-    function getColor(d, breaks) {
+    function getColor(d, breakArray) {
 
-        if (d <= breaks[1]) {
+        if (d <= breakArray[1]) {
             return '#ffffb2';
-        } else if (d <= breaks[2]) {
+        } else if (d <= breakArray[2]) {
             return '#fecc5c';
-        } else if (d <= breaks[3]) {
+        } else if (d <= breakArray[3]) {
             return '#fd8d3c';
-        } else if (d <= breaks[4]) {
+        } else if (d <= breakArray[4]) {
             return '#f03b20'
-        } else if (d <= breaks[5]) {
+        } else if (d <= breakArray[5]) {
             return '#bd0026'
         }
     }
@@ -212,10 +212,10 @@
         sliderControl.onAdd = function (map) {
 
             // select an existing DOM element with an id of "ui-controls"
-            var slider = L.DomUtil.get("#slider");
+            var uicontrols = L.DomUtil.get("ui-controls");
 
             // when the user clicks on the slider element
-            L.DomEvent.addListener(slider, 'mousedown', function (e) {
+            L.DomEvent.addListener(uicontrols, 'mousemove', function (e) {
 
                 // prevent the click event from bubbling up to the map
                 L.DomEvent.stopPropagation(e);
@@ -223,11 +223,12 @@
             });
 
             // return the slider from the onAdd method
-            return slider;
+            return uicontrols;
         }
 
         // add the control object containing our slider element to the map
         sliderControl.addTo(map);
+
         $(".year-slider").on("input change", function () {
             if ($(this).val() == 1)
                 attribute = "1519";
@@ -241,8 +242,10 @@
                 attribute = "5564";
             else if ($(this).val() == 6)
                 attribute = "65OV";
+
             attribute += getRadioVal(document.getElementById('formname'), "radiogroup");
-            updateMap(breaks);
+
+            updateMap(breakArray);
 
         });
     }
@@ -264,11 +267,11 @@
 
     function clickRadioButton() {
         attribute = attribute.substr(0, 4) + getRadioVal(document.getElementById('formname'), "radiogroup");
-        updateMap(breaks);
-        updateLegend(breaks);
+        updateMap(breakArray);
+        updateLegend(breakArray);
     }
 
-    function drawLegend(breaks) {
+    function drawLegend(breakArray) {
 
 
         // create a new Leaflet control object, and position it top left
@@ -285,11 +288,11 @@
 
         // add the legend to the map
         legendControl.addTo(map);
-        updateLegend(breaks);
+        updateLegend(breakArray);
 
     }
 
-    function updateLegend(breaks) {
+    function updateLegend(breakArray) {
         var selectedID = getRadioVal(document.getElementById('formname'), "radiogroup").toLowerCase();
         var selector = 'label[for=' + selectedID + ']';
         var label = document.querySelector(selector);
@@ -297,9 +300,9 @@
 
         var legend = $('.legend').html("<h3>Percent " + selectedRadioButton + "</h3><ul>");
 
-        for (var i = 0; i < breaks.length - 1; i++) {
-            var color = getColor(breaks[i + 1], breaks);
-            $('.legend ul').append('<li><span style="background:' + color + '"></span>' + breaks[i] + ' &mdash; ' + breaks[i + 1] + '%</li>');
+        for (var i = 0; i < breakArray.length - 1; i++) {
+            var color = getColor(breakArray[i + 1], breakArray);
+            $('.legend ul').append('<li><span style="background:' + color + '"></span>' + breakArray[i] + ' &mdash; ' + breakArray[i + 1] + '%</li>');
         }
     };
 })();
