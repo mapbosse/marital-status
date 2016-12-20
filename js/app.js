@@ -19,7 +19,6 @@
 
     var dataLayer;
     var attribute = "2034NM";
-    var breaks;
     var breakArray = [0, 20, 40, 60, 80, 100];
 
     $.getJSON("data/uscounties.json", function (counties) {
@@ -81,13 +80,12 @@
                     fillColor: '#1f78b4' // set fill color
                 };
             }
-        }).addTo(map);
-        breaks = getClassBreaks();
+        }).addTo(map);;
 
-        updateMap(breaks);
+        updateMap(breakArray);
         drawInfo();
 
-        drawLegend(breaks);
+        drawLegend(breakArray);
         buildUI();
 
         dataLayer.eachLayer(function (layer) {
@@ -128,44 +126,6 @@
         });
     }
 
-
-    // function gets the class breaks
-    function getClassBreaks() {
-
-        // create empty array to hold range of data values
-        //        var values = [];
-        //
-        //        var headers = ["1519T", "1519NM", "1519W", "1519D", "1519S", "1519NVM", "2034T", "2034NM", "2034W", "2034D", "2034S", "2034NVM", "3544T", "3544NM", "3544W", "3544D", "3544S", "3544NVM", "4554T", "4554NM", "4554W", "4554D", "4554S", "4554NVM", "5564T", "5564NM", "5564W", "5564D", "5564S", "5564NVM", "65OVT", "65OVNM", "65OVW", "65OVD", "65OVS", "65OVNVM"];
-        //
-        //        var min, max;
-        //        min = max =0;
-        //
-        //        // loop through each layer
-        //        dataLayer.eachLayer(function (layer) {
-        //            for (i = 0; i < headers.length - 1; i++) {
-        //                var value = layer.feature.properties[headers[i]];
-        //                if (value != null)
-        //                    values.push(Number(value));
-        //
-        ////                var value = layer.feature.properties[headers[i]];
-        ////                if(value != null){
-        ////                min = Math.min(min, value);
-        ////                max = Math.max(max, value);
-        ////                }
-        //
-        //                //if (value != null)
-        //                //    values.push(Number(value));
-        //            }
-        //        });
-
-        //breaks = ss.quantile(values, breakArray);
-        breaks = breakArray;
-        //var breaks = (max - min) / 5;
-
-        return breaks;
-
-    }
-
     function updateMap(breaks) {
         dataLayer.eachLayer(function (layer) {
             layer.setStyle({
@@ -198,8 +158,7 @@
             var div = L.DomUtil.create('div', 'info'); //adds the info surrounded by a div called info (used .info in the css to style it)
             return div;
         }
-//        var uicontrols = document.getElementById("ui-controls");
-//        uicontrols.appendChild(div);
+
         info.addTo(map); //adds infobox to map
         $(".info").hide();
     }
@@ -253,7 +212,7 @@
         sliderControl.onAdd = function (map) {
 
             // select an existing DOM element with an id of "ui-controls"
-            var slider = L.DomUtil.get("ui-controls");
+            var slider = L.DomUtil.get("#slider");
 
             // when the user clicks on the slider element
             L.DomEvent.addListener(slider, 'mousedown', function (e) {
