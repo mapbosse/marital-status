@@ -71,7 +71,7 @@ p.rangetitle{
     margin: 0px;
 }
 p.rangeLabel:hover {
-    /*cursor: pointer;*/
+    cursor: pointer;
 }
 p.rangeLabel.selected {
     color: #00ffff;

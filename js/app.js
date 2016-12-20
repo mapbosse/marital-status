@@ -48,25 +48,6 @@
         } // outer for loop is complete
         drawMap(states);
 
-        $(document).ready(function () {
-
-            $("input[type='range']").change(function () {
-                slider = $(this);
-                value = (slider.val() - 1);
-
-                $('p.rangeLabel').removeClass('selected');
-                $('p.rangeLabel:eq(' + value + ')').addClass('selected');
-
-            });
-
-            $('p.rangeLabel').bind('click', function () {
-                label = $(this);
-                value = label.index();
-                $("input[type='range']").attr('value', value)
-                    .trigger('change');
-            });
-
-        });
     }
 
     function drawMap(data) {
@@ -230,22 +211,46 @@
         sliderControl.addTo(map);
 
         $(".year-slider").on("input change", function () {
-            if ($(this).val() == 1)
+
+            var slider = $(this),
+                value = (slider.val() - 1);
+
+            $('p.rangeLabel').removeClass('selected');
+            $('p.rangeLabel:eq(' + value + ')').addClass('selected');
+
+            if (slider.val() == 1)
                 attribute = "1519";
-            else if ($(this).val() == 2)
+            else if (slider.val() == 2)
                 attribute = "2034";
-            else if ($(this).val() == 3)
+            else if (slider.val() == 3)
                 attribute = "3544";
-            else if ($(this).val() == 4)
+            else if (slider.val() == 4)
                 attribute = "4554";
-            else if ($(this).val() == 5)
+            else if (slider.val() == 5)
                 attribute = "5564";
-            else if ($(this).val() == 6)
+            else if (slider.val() == 6)
                 attribute = "65OV";
 
             attribute += getRadioVal(document.getElementById('formname'), "radiogroup");
 
+
+
             updateMap(breakArray);
+
+        });
+
+        // when user clicks on class break, update slider
+        $('p.rangeLabel').on('click', function () {
+
+            // get current class clicked on by user
+            var value = $(this).index() - 1;
+
+            // update the slider value
+            $('.year-slider').val(value + 1);
+
+            // remove/add current selected classes
+            $('p.rangeLabel').removeClass('selected');
+            $('p.rangeLabel:eq(' + value + ')').addClass('selected');
 
         });
     }
