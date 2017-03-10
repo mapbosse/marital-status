@@ -19,9 +19,7 @@
 
     var dataLayer;
     var attribute = "2034NM";
-    var breaks;
-    //var breakArray = [0, 0.2, 0.4, 0.6, 0.8, 1];
-    var breakArray = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+    var breakArray = [0, 20, 40, 60, 80, 100];
 
     $.getJSON("data/uscounties.json", function (counties) {
 
@@ -50,33 +48,7 @@
         } // outer for loop is complete
         drawMap(states);
 
-        $(document).ready(function () {
-
-            $("input[type='range']").change(function () {
-                slider = $(this);
-                value = (slider.val() - 1);
-
-                $('p.rangeLabel').removeClass('selected');
-                $('p.rangeLabel:eq(' + value + ')').addClass('selected');
-
-            });
-
-            $('p.rangeLabel').bind('click', function () {
-                label = $(this);
-                value = label.index();
-                $("input[type='range']").attr('value', value)
-                    .trigger('change');
-            });
-
-        });
     }
-
-    //        function processData(data) {
-    //            for (var i in data.features) {
-    //                console.log(data.features[i].properties);
-    //            }
-    //            drawMap(data);
-    //        }
 
     function drawMap(data) {
 
@@ -89,13 +61,12 @@
                     fillColor: '#1f78b4' // set fill color
                 };
             }
-        }).addTo(map);
-        breaks = getClassBreaks();
+        }).addTo(map);;
 
-        updateMap(breaks);
+        updateMap(breakArray);
         drawInfo();
 
-        drawLegend(breaks);
+        drawLegend(breakArray);
         buildUI();
 
         dataLayer.eachLayer(function (layer) {
@@ -136,103 +107,29 @@
         });
     }
 
-
-    // function gets the class breaks
-    function getClassBreaks() {
-
-        // create empty array to hold range of data values
-        //        var values = [];
-        //
-        //        var headers = ["1519T", "1519NM", "1519W", "1519D", "1519S", "1519NVM", "2034T", "2034NM", "2034W", "2034D", "2034S", "2034NVM", "3544T", "3544NM", "3544W", "3544D", "3544S", "3544NVM", "4554T", "4554NM", "4554W", "4554D", "4554S", "4554NVM", "5564T", "5564NM", "5564W", "5564D", "5564S", "5564NVM", "65OVT", "65OVNM", "65OVW", "65OVD", "65OVS", "65OVNVM"];
-        //
-        //        var min, max;
-        //        min = max =0;
-        //
-        //        // loop through each layer
-        //        dataLayer.eachLayer(function (layer) {
-        //            for (i = 0; i < headers.length - 1; i++) {
-        //                var value = layer.feature.properties[headers[i]];
-        //                if (value != null)
-        //                    values.push(Number(value));
-        //
-        ////                var value = layer.feature.properties[headers[i]];
-        ////                if(value != null){
-        ////                min = Math.min(min, value);
-        ////                max = Math.max(max, value);
-        ////                }
-        //            
-        //                //if (value != null)
-        //                //    values.push(Number(value));
-        //            }
-        //        });
-
-        //breaks = ss.quantile(values, breakArray);
-        breaks = breakArray;
-        //var breaks = (max - min) / 5;
-
-        return breaks;
-
-    }
-
-    function updateMap(breaks) {
+    function updateMap(breakArray) {
         dataLayer.eachLayer(function (layer) {
             layer.setStyle({
-                fillColor: getColor(Number(layer.feature.properties[attribute]), breaks)
+                fillColor: getColor(Number(layer.feature.properties[attribute]), breakArray)
             })
         });
     }
     // function to get the color value
-    function getColor(d, breaks) {
+    function getColor(d, breakArray) {
 
-        if (d <= breaks[1]) {
-            return '#9e0142';
-        } else if (d <= breaks[2]) {
-            return '#d53e4f';
-        } else if (d <= breaks[3]) {
-            return '#f46d43';
-        } else if (d <= breaks[4]) {
-            return '#fdae61'
-        } else if (d <= breaks[5]) {
-            return '#fee08b'
-        } else if (d <= breaks[6]) {
-            return '#e6f598';
-        } else if (d <= breaks[7]) {
-            return '#abdda4';
-        } else if (d <= breaks[8]) {
-            return '#66c2a5'
-        } else if (d <= breaks[9]) {
-            return '#3288bd'
-        } else if (d <= breaks[10]) {
-            return '#5e4fa2'
-        } else
-            return "#8a8a8a";
+        if (d <= breakArray[1]) {
+            return '#ffffb2';
+        } else if (d <= breakArray[2]) {
+            return '#fecc5c';
+        } else if (d <= breakArray[3]) {
+            return '#fd8d3c';
+        } else if (d <= breakArray[4]) {
+            return '#f03b20'
+        } else if (d <= breakArray[5]) {
+            return '#bd0026'
+        }
     }
 
-    // function to get the color value
-//    function getStrokeColor(d, breaks) {
-//
-//        if (d <= breaks[1]) {
-//            return '#001a1a';
-//        } else if (d <= breaks[2]) {
-//            return '#003333';
-//        } else if (d <= breaks[3]) {
-//            return '#006666';
-//        } else if (d <= breaks[4]) {
-//            return '#009999'
-//        } else if (d <= breaks[5]) {
-//            return '#00cccc'
-//        } else if (d <= breaks[6]) {
-//            return '#00ffff';
-//        } else if (d <= breaks[7]) {
-//            return '#33ffff';
-//        } else if (d <= breaks[8]) {
-//            return '#66ffff'
-//        } else if (d <= breaks[9]) {
-//            return '#99ffff'
-//        } else if (d <= breaks[10]) {
-//            return '#ccffff'
-//        }
-//    }
 
     function drawInfo() {
         var info = L.control({
@@ -242,8 +139,7 @@
             var div = L.DomUtil.create('div', 'info'); //adds the info surrounded by a div called info (used .info in the css to style it)
             return div;
         }
-//        var uicontrols = document.getElementById("ui-controls");
-//        uicontrols.appendChild(div);
+
         info.addTo(map); //adds infobox to map
         $(".info").hide();
     }
@@ -297,10 +193,10 @@
         sliderControl.onAdd = function (map) {
 
             // select an existing DOM element with an id of "ui-controls"
-            var slider = L.DomUtil.get("ui-controls");
+            var uicontrols = L.DomUtil.get("ui-controls");
 
             // when the user clicks on the slider element
-            L.DomEvent.addListener(slider, 'mousedown', function (e) {
+            L.DomEvent.addListener(L.DomUtil.get("year-slider"), 'mousedown', function (e) {
 
                 // prevent the click event from bubbling up to the map
                 L.DomEvent.stopPropagation(e);
@@ -308,26 +204,53 @@
             });
 
             // return the slider from the onAdd method
-            return slider;
+            return uicontrols;
         }
 
         // add the control object containing our slider element to the map
         sliderControl.addTo(map);
-        $(".year-slider").on("input change", function () {
-            if ($(this).val() == 1)
+
+        $("#year-slider").on("input change", function () {
+
+            var slider = $(this),
+                value = (slider.val() - 1);
+
+            $('p.rangeLabel').removeClass('selected');
+            $('p.rangeLabel:eq(' + value + ')').addClass('selected');
+
+            if (slider.val() == 1)
                 attribute = "1519";
-            else if ($(this).val() == 2)
+            else if (slider.val() == 2)
                 attribute = "2034";
-            else if ($(this).val() == 3)
+            else if (slider.val() == 3)
                 attribute = "3544";
-            else if ($(this).val() == 4)
+            else if (slider.val() == 4)
                 attribute = "4554";
-            else if ($(this).val() == 5)
+            else if (slider.val() == 5)
                 attribute = "5564";
-            else if ($(this).val() == 6)
+            else if (slider.val() == 6)
                 attribute = "65OV";
+
             attribute += getRadioVal(document.getElementById('formname'), "radiogroup");
-            updateMap(breaks);
+
+
+
+            updateMap(breakArray);
+
+        });
+
+        // when user clicks on class break, update slider
+        $('p.rangeLabel').on('click', function () {
+
+            // get current class clicked on by user
+            var value = $(this).index() - 1;
+
+            // update the slider value
+            $('#year-slider').val(value + 1);
+
+            // remove/add current selected classes
+            $('p.rangeLabel').removeClass('selected');
+            $('p.rangeLabel:eq(' + value + ')').addClass('selected');
 
         });
     }
@@ -349,11 +272,11 @@
 
     function clickRadioButton() {
         attribute = attribute.substr(0, 4) + getRadioVal(document.getElementById('formname'), "radiogroup");
-        updateMap(breaks);
-        updateLegend(breaks);
+        updateMap(breakArray);
+        updateLegend(breakArray);
     }
 
-    function drawLegend(breaks) {
+    function drawLegend(breakArray) {
 
 
         // create a new Leaflet control object, and position it top left
@@ -370,11 +293,11 @@
 
         // add the legend to the map
         legendControl.addTo(map);
-        updateLegend(breaks);
+        updateLegend(breakArray);
 
     }
 
-    function updateLegend(breaks) {
+    function updateLegend(breakArray) {
         var selectedID = getRadioVal(document.getElementById('formname'), "radiogroup").toLowerCase();
         var selector = 'label[for=' + selectedID + ']';
         var label = document.querySelector(selector);
@@ -382,9 +305,9 @@
 
         var legend = $('.legend').html("<h3>Percent " + selectedRadioButton + "</h3><ul>");
 
-        for (var i = 0; i < breaks.length - 1; i++) {
-            var color = getColor(breaks[i + 1], breaks);
-            $('.legend ul').append('<li><span style="background:' + color + '"></span>' + breaks[i] + ' &mdash; ' + breaks[i + 1] + '%</li>');
+        for (var i = 0; i < breakArray.length - 1; i++) {
+            var color = getColor(breakArray[i + 1], breakArray);
+            $('.legend ul').append('<li><span style="background:' + color + '"></span>' + breakArray[i] + ' &mdash; ' + breakArray[i + 1] + '%</li>');
         }
     };
 })();
